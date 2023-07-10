@@ -64,6 +64,11 @@ DEFAULT_CURRENCY_SYMBOLS = ("$", "¥", "£", "€")
     "currency symbol  [default: '{}']".format("', '".join(DEFAULT_CURRENCY_SYMBOLS)),
 )
 @click.option(
+    "--sep",
+    type=str,
+    default=",",
+    help="set CSV separator [default ',']",)
+@click.option(
     "--output",
     "-o",
     type=click.File("w"),
@@ -74,6 +79,7 @@ DEFAULT_CURRENCY_SYMBOLS = ("$", "¥", "£", "€")
 @click.version_option()
 def main(
     select,
+    sep,
     null_value,
     convert_numbers,
     group_symbol,
@@ -216,7 +222,7 @@ def main(
             rows.append(row)
 
     # Output the CSV to stdout.
-    output = csv.writer(output)
+    output = csv.writer(output, delimiter=sep)
     for row in rows:
         # Extra empty cells are added to the row as required, to ensure that
         # all rows have the same number of fields (as required by the closest
