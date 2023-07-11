@@ -35,7 +35,7 @@ def parse_html(html_file):
         raise ValueError("no HTML provided")
     if not unicode_html.unicode_markup:
         raise ValueError("could not detect character encoding")
-    return lxml.html.fromstring(unicode_html.unicode_markup)
+    return lxml.html.fromstring(unicode_html.unicode_markup.encode())
 
 
 def select_elements(doc, select):
